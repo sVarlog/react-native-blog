@@ -1,23 +1,23 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { DATA } from '../data';
 import { PostList } from '../components/PostList';
+import { useSelector } from 'react-redux';
 
 
 export const BookmarkedScreen = ({navigation}) => {
     const openPostHandler = post => {
-        navigation.navigate('PostPage', {
+        navigation.push('PostPageBooked', {
             postId: post.id,
             date: post.date,
             booked: post.booked
-        })
+        });
     }
 
-    const data = DATA.filter(post => post.booked)
+    const bookedPosts = useSelector(state => state.post.bookedPosts);
 
     return (
         <View style={styles.center}>
-            <PostList data={data} onOpen={openPostHandler} />
+            <PostList data={bookedPosts} onOpen={openPostHandler} />
         </View>
     );
 };

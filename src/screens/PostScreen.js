@@ -1,12 +1,20 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import { View, StyleSheet, Image, Text, Button, ScrollView, Alert } from 'react-native';
-import { DATA } from '../data';
+import { useDispatch, useSelector } from 'react-redux';
+import { removePost, toggleBooked } from '../store/actions/post';
 import { THEME } from '../theme';
 
 export const PostScreen = ({navigation, route}) => {
     const postId = route.params.postId;
+    const dispatch = useDispatch();
 
-    const post = DATA.find(el => el.id === postId);
+    const post = useSelector(state => state.post.allPosts.find(el => el.id === postId));
+
+    const booked = useSelector(state => state.post.bookedPosts.find(el => el.id === postId));
+
+    const toggleHandler = useCallback(() => {
+        dispatch(toggleBooked(postId));
+    }, [dispatch, postId]);
 
     const removeHandler = () => {
         Alert.alert(
@@ -20,15 +28,28 @@ export const PostScreen = ({navigation, route}) => {
                 { 
                     text: "OK", 
                     style: 'destructive',
-                    onPress: () => console.log("OK Pressed") 
+                    onPress: () => {
+                        navigation.goBack()
+                        dispatch(removePost(postId));
+                    }
                 }
             ]
         );
     }
 
     useEffect(() => {
-        navigation.setParams({booked: post.booked})
-    }, []);
+        navigation.setParams({toggleHandler});
+    }, [toggleHandler]);
+
+    useEffect(() => {
+        if (booked) {
+            navigation.setParams({booked});
+        }
+    }, [booked]);
+
+    if (!post) {
+        return null;
+    }
 
     return (
         <ScrollView style={styles.center}>

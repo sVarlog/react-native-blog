@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import AppLoading from 'expo-app-loading';
 import { bootstrap } from './src/bootstrap';
+import { Provider } from 'react-redux';
 
 import { NavigationContainer } from '@react-navigation/native';
 
-import { BottomTabNavigator } from './src/navigation/TabsNavigation';
 import { DrawerNavigation } from './src/navigation/DrawerNavigation';
+import { store } from './src/store';
 
 export default function App() {
 	const [isReady, setIsReady] = useState(false);
@@ -19,10 +20,10 @@ export default function App() {
 	}
 
 	return (
-		<NavigationContainer>
-			<DrawerNavigation />
-		</NavigationContainer>
-	)
-
-	// return <AppNavigation />
+		<Provider store={store}>
+			<NavigationContainer>
+				<DrawerNavigation />
+			</NavigationContainer>
+		</Provider>
+	);
 };

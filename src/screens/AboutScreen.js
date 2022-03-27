@@ -13,8 +13,6 @@ const OpenURLButton = ({url, children, styles}) => {
         }
     }, [url]);
 
-    console.log(styles, 'styleee =>');
-
     return (
         <Pressable style={{...styles}} onPress={handlePress}>
             <Text style={{textAlign: 'center', fontSize: 14, fontFamily: 'open-bold'}}>{children}</Text>

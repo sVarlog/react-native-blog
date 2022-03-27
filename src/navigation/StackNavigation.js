@@ -44,13 +44,16 @@ const aboutOptions = ({navigation}) => ({
 
 const postOption = (route) => {
     const booked = route.params.booked;
+
+    const toggleHandler = route.params.toggleHandler;
+
     const iconName = booked ? 'ios-star' : 'ios-star-outline';
 
     return {
         headerRight: () => {    
             return (
                 <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-                    <Item title="Take photo" iconName={iconName} onPress={() => console.log('press photo')} />
+                    <Item title="Take photo" iconName={iconName} onPress={toggleHandler} />
                 </HeaderButtons>
             )
         },
@@ -59,7 +62,7 @@ const postOption = (route) => {
 
 export const MainStackNavigator = () => {
     return (
-        <Stack.Navigator options={({route}) => ({...options, ...postOption(route), title: `Post at ${new Date(route.params.date).toLocaleDateString()}`})}>
+        <Stack.Navigator>
             <Stack.Screen 
                 name="BlogPage" 
                 component={MainScreen} 
@@ -81,6 +84,11 @@ export const BookedStackNavigator = () => {
                 name="BookmarkedPage" 
                 component={BookmarkedScreen} 
                 options={{...options, title: 'Favorite'}}
+            />
+            <Stack.Screen 
+                name="PostPageBooked" 
+                component={PostScreen} 
+                options={({route}) => ({...options, ...postOption(route), title: `Post at ${new Date(route.params.date).toLocaleDateString()}`})}
             />
         </Stack.Navigator>
     );
