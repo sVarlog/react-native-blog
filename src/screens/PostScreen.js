@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, StyleSheet, Image, Text, Button, ScrollView, Alert } from 'react-native';
 import { DATA } from '../data';
 import { THEME } from '../theme';
@@ -25,6 +25,10 @@ export const PostScreen = ({navigation, route}) => {
             ]
         );
     }
+
+    useEffect(() => {
+        navigation.setParams({booked: post.booked})
+    }, []);
 
     return (
         <ScrollView style={styles.center}>

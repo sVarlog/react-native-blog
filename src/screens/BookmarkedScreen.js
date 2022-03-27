@@ -1,18 +1,29 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { DATA } from '../data';
+import { PostList } from '../components/PostList';
 
-export const BookmarkedScreen = ({}) => {
+
+export const BookmarkedScreen = ({navigation}) => {
+    const openPostHandler = post => {
+        navigation.navigate('PostPage', {
+            postId: post.id,
+            date: post.date,
+            booked: post.booked
+        })
+    }
+
+    const data = DATA.filter(post => post.booked)
+
     return (
         <View style={styles.center}>
-            <Text>BookmarkedScreen</Text>
+            <PostList data={data} onOpen={openPostHandler} />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     center: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        width: '100%'
     }
 });

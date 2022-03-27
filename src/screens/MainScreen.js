@@ -1,26 +1,26 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
-import { Post } from '../components/Post';
+import { View, StyleSheet } from 'react-native';
+import { PostList } from '../components/PostList';
 import { DATA } from '../data';
 
-export const MainScreen = ({navigation}) => {
+export const MainScreen = (props) => {
     const openPostHandler = (post) => {
-        navigation.push('Post', {postId: post.id, date: post.date});
+        props.navigation.push('PostPage', {postId: post.id, date: post.date});
     }
 
     return (
-        <View style={styles.wrapper}>
-            <FlatList 
-                data={DATA} 
-                keyExtractor={post => post.id.toString()}
-                renderItem={({item}) => <Post post={item} onOpen={openPostHandler} /> }
-            />
+        <View style={styles.center}>
+            <PostList data={DATA} onOpen={openPostHandler} />
+
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     center: {
-        padding: 10
+        flex: 1,
+      },
+    wrapper: {
+        flex: 1
     }
 });
