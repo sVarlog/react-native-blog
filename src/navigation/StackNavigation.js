@@ -67,7 +67,7 @@ export const MainStackNavigator = () => {
             <Stack.Screen 
                 name="BlogPage" 
                 component={MainScreen} 
-                options={(navigation) => ({...options, ...blogOptions(navigation), title: 'My Blog'})}
+                options={(navigation) => ({...options, ...blogOptions(navigation), title: 'My Blog!'})}
             />
             <Stack.Screen 
                 name="PostPage" 

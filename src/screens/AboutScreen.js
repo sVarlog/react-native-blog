@@ -24,7 +24,7 @@ export const AboutScreen = ({}) => {
     return (
         <View style={styles.center}>
             <Text>It is React Native application like a blog, for posts and etc.</Text>
-            <Text>Application version <Text style={styles.version}>1.1.2</Text></Text>
+            <Text>Application version <Text style={styles.version}>1.1.3</Text></Text>
 
             <OpenURLButton styles={styles.link} url={'https://github.com/sVarlog'}>sVarlog</OpenURLButton>
         </View>
