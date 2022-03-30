@@ -13,8 +13,8 @@ export const PostScreen = ({navigation, route}) => {
     const booked = useSelector(state => state.post.bookedPosts.find(el => el.id === postId));
 
     const toggleHandler = useCallback(() => {
-        dispatch(toggleBooked(postId));
-    }, [dispatch, postId]);
+        dispatch(toggleBooked(post));
+    }, [dispatch, post]);
 
     const removeHandler = () => {
         Alert.alert(
@@ -42,9 +42,7 @@ export const PostScreen = ({navigation, route}) => {
     }, [toggleHandler]);
 
     useEffect(() => {
-        if (booked) {
-            navigation.setParams({booked});
-        }
+        navigation.setParams({booked});
     }, [booked]);
 
     if (!post) {

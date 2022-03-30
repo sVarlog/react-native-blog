@@ -43,6 +43,7 @@ const aboutOptions = ({navigation}) => ({
 });
 
 const postOption = (route) => {
+
     const booked = route.params.booked;
 
     const toggleHandler = route.params.toggleHandler;

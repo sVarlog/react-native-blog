@@ -1,21 +1,22 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import { View, Image, ScrollView, Button, StyleSheet, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { PhotoPicker } from '../components/PhotoPicker';
 import { addPost } from '../store/actions/post';
 
 import { THEME } from '../theme';
 
 export const CreateScreen = ({navigation}) => {
     const [text, setText] = useState('');
-    const dispatch = useDispatch();
+    const imgRef = useRef();
 
-    const img = 'https://image.shutterstock.com/image-photo/new-york-city-panorama-skyline-600w-1011270001.jpg';
+    const dispatch = useDispatch();
 
     const saveHandler = () => {
         const post = {
             date: new Date().toJSON(),
             text,
-            img,
+            img: imgRef.current,
             booked: false
         }
 
@@ -26,14 +27,14 @@ export const CreateScreen = ({navigation}) => {
         navigation.navigate('BlogPage');
     }
 
+    const photoPickHandler = (uri) => {
+        imgRef.current = uri;
+    }
+
     return (
         <ScrollView>
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <View style={styles.wrapper}>
-                    <Image 
-                        style={styles.img}
-                        source={{uri: img}}
-                    />
                     <TextInput 
                         style={styles.textArea}
                         placeholder="Enter post description"
@@ -41,7 +42,13 @@ export const CreateScreen = ({navigation}) => {
                         onChangeText={setText}
                         multiline
                     />
-                    <Button title="Publish" color={THEME.MAIN_COLOR} onPress={saveHandler} />
+                    <PhotoPicker onPick={photoPickHandler} />
+                    <Button 
+                        title="Publish" 
+                        color={THEME.MAIN_COLOR}
+                        onPress={saveHandler} 
+                        disabled={!text || !imgRef.current}
+                    />
                 </View>
             </TouchableWithoutFeedback>
         </ScrollView>

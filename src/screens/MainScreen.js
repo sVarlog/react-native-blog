@@ -1,12 +1,13 @@
 import React, {useEffect} from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { PostList } from '../components/PostList';
 import { loadPosts } from '../store/actions/post';
+import { THEME } from '../theme';
 
 export const MainScreen = (props) => {
     const openPostHandler = (post) => {
-        props.navigation.push('PostPage', {postId: post.id, date: post.date});
+        props.navigation.push('PostPage', {screen: 'PostPage', postId: post.id, date: post.date});
     }
 
     const dispatch = useDispatch();
@@ -16,6 +17,15 @@ export const MainScreen = (props) => {
     }, [dispatch]);
 
     const allPosts = useSelector(state => state.post.allPosts);
+    const loading = useSelector(state => state.post.loading);
+
+    if (loading) {
+        return (
+            <View style={styles.centerLoader}>
+                <ActivityIndicator color={THEME.MAIN_COLOR} />
+            </View>
+        );
+    }
 
     return (
         <View style={styles.center}>
@@ -27,7 +37,12 @@ export const MainScreen = (props) => {
 const styles = StyleSheet.create({
     center: {
         flex: 1,
-      },
+    },
+    centerLoader: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     wrapper: {
         flex: 1
     }

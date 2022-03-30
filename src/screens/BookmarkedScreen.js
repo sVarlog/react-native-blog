@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 export const BookmarkedScreen = ({navigation}) => {
     const openPostHandler = post => {
         navigation.push('PostPageBooked', {
+            screen: 'PostPageBooked',
             postId: post.id,
             date: post.date,
             booked: post.booked
